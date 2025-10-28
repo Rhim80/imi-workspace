@@ -1,0 +1,41 @@
+# Obsidian workspace (환경별로 다름 - 공유 안 함)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+
+# Sensitive files
+.env
+.env.local
+*.env
+
+# API keys and secrets
+*api_key*
+*secret*
+firecrawl_config.sh
+
+# Claude files
+CLAUDE.md
+.claude/settings.local.json
+
+# MCP config
+.mcp.json
+
+# Scripts with sensitive data
+scripts/*_local.sh
+
+# Google Calendar API credentials
+00-system/02-scripts/calendar/credentials.json
+00-system/02-scripts/calendar/token.pickle
+
+# macOS files
+.DS_Store
+
+# Node modules - always exclude from repo
+node_modules/
+.node_modules/
+pnpm-lock.yaml
+
+# Temporary directories
+.tmp/
+
+# Never commit real API keys
+*_API_KEY.mcp.json
