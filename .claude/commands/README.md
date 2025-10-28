@@ -1,31 +1,34 @@
-# Claude Code 커스텀 커맨드 위치
+# Commands
 
-## ⚠️ 중요: 커맨드 파일 위치
+사용 가능한 Slash Commands 목록입니다.
 
-**모든 커스텀 커맨드는 유저 레벨에서 관리됩니다:**
+## 초기 설정
 
-- Windows: `C:\Users\hovoo\.claude\commands\`
-- Mac: `/Users/rhim/.claude\commands\`
+- `/setup-workspace` - 워크스페이스 초기 설정
 
-**이 폴더(프로젝트 레벨)에는 커맨드 파일을 두지 않습니다.**
+## Daily Workflow
 
-## 사용 가능한 커맨드
+- `/daily-note` - 오늘 Daily Note 생성/열기
+- `/daily-review` - 하루 정리
+- `/weekly-synthesis` - 주간 회고
 
-유저 레벨 `.claude/commands/`에서 관리되는 커맨드:
+## 지식 관리
 
-- `/daily-note` - Daily Note 생성/열기
-- `/daily-review` - Daily Review 생성
-- `/idea [카테고리]` - 아이디어 추출 및 저장
-- `/push-all` - 모든 Git 저장소 push
-- `/pull-all` - 모든 Git 저장소 pull
-- `/git-status` - 모든 Git 저장소 상태 확인
+- `/idea [카테고리]` - 아이디어 저장
+- `/todo` - 할 일 추가
+- `/todos` - 할 일 목록 보기
+- `/inbox-processor` - Inbox 정리
 
-## Git 저장소 정보
+## AI 활용
 
-유저 레벨 config:
-- 저장소: https://github.com/Rhim80/claude-config.git
-- 경로: `~/.claude/`
+- `/thinking-partner` - AI와 대화하며 생각 발전
 
-프로젝트:
-- 저장소: https://github.com/Rhim80/claude-projects.git
-- 경로: PKM 메인
+## 시스템
+
+- `/create-command` - 커스텀 명령어 생성
+- `/push-all` - Git push
+- `/pull-all` - Git pull
+
+---
+
+각 명령어의 자세한 사용법은 해당 파일을 참고하세요.
