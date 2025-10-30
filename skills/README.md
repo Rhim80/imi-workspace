@@ -38,6 +38,47 @@ gcalcli init
 
 ---
 
+### ✅ Web Crawler + OCR (Firecrawl + Gemini)
+
+**상태**: 설정 가이드 완료 ✨
+
+웹페이지 크롤링 + 이미지 OCR을 자동으로 처리:
+- "https://competitor-cafe.com 분석해줘"
+- "이 페이지 크롤링해줘"
+- "경쟁사 웹사이트 분석"
+- "대용량 이미지 OCR 필요해"
+
+**설정 방법**: [web-crawler-ocr/SETUP_GUIDE.md](./web-crawler-ocr/SETUP_GUIDE.md) (10분 소요)
+
+**특징**:
+- ✅ Firecrawl로 깨끗한 텍스트 추출 (광고/잡음 제거)
+- ✅ Gemini OCR로 대용량 이미지 처리 (20MB, Claude 5MB 제한 우회)
+- ✅ 완전한 마크다운 생성 (텍스트 + 이미지 분석)
+- ✅ URL 자동 감지 및 실행
+
+**시작하기**:
+```bash
+# 1. 자동 설정 (권장)
+Claude Code에서: /setup-web-crawler
+
+# 2. 수동 설정
+cd skills/web-crawler-ocr/scripts
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+# 3. API 키 설정 (.env 파일)
+GEMINI_API_KEY=your_gemini_key
+FIRECRAWL_API_KEY=your_firecrawl_key
+
+# 4. Claude와 대화
+"https://example.com 분석해줘"
+```
+
+자세한 내용: [web-crawler-ocr/README.md](./web-crawler-ocr/README.md)
+
+---
+
 ## 📖 Skills란?
 
 Skills는 Claude Code를 외부 서비스와 연결하여 확장하는 기능입니다.
@@ -47,7 +88,7 @@ Skills는 Claude Code를 외부 서비스와 연결하여 확장하는 기능입
 | 구분 | Skills | Commands |
 |------|--------|----------|
 | **목적** | 외부 서비스 통합 | 내부 워크플로우 자동화 |
-| **예시** | Google Calendar, Notion | `/daily-note`, `/setup-workspace` |
+| **예시** | Google Calendar, Web Crawler | `/daily-note`, `/setup-workspace` |
 | **위치** | `skills/` | `.claude/commands/` |
 | **설정** | OAuth, API 키 필요 | 설정 불필요 (즉시 사용) |
 
@@ -152,6 +193,7 @@ Skills를 `/daily-note`, `/weekly-review` 등의 commands와 결합하여 자동
 Skills는 **선택적**입니다. 필요한 기능만 설정하세요.
 
 - ✅ **google-calendar**: 일정 관리가 중요한 경우
+- ✅ **web-crawler-ocr**: 웹 리서치, 경쟁사 분석이 필요한 경우
 - 🔜 **기타 skills**: 필요에 따라 추가
 
 ---

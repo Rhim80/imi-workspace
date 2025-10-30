@@ -1,0 +1,7 @@
+# Web Crawler + Gemini OCR 시스템 의존성
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+firecrawl-py>=0.0.14
+google-generativeai>=0.3.0
+python-dotenv>=1.0.0
+markdownify>=0.11.6
