@@ -219,6 +219,34 @@ imi-workspace/
 - **daily-note-template.md** - 매일 작성하는 노트
 - **weekly-review-template.md** - 주간 회고
 - **Project Template.md** - 새 프로젝트 시작
+- **pr-faq-template.md** - Amazon Working Backwards PR/FAQ 문서
+
+## Slash Commands
+
+`.claude/commands/`에서 사용 가능한 커맨드:
+
+### 📝 Daily Workflow
+- `/daily-note` - 오늘 날짜의 Daily Note 생성/열기
+- `/daily-review` - 어제와 오늘 변경사항 분석
+- `/weekly-synthesis` - 주간 회고 생성
+- `/todo` / `/todos` - 할 일 관리
+
+### 🎯 Project Management
+- `/working-backwards-pr` - Amazon Working Backwards PR/FAQ 문서 생성 (대화형)
+- `/generate-roadmap` - PR/FAQ 기반 역순 로드맵 생성
+
+### 💡 Thinking & Ideas
+- `/thinking-partner` - 생각 정리 파트너
+- `/idea` - 대화에서 아이디어 추출 및 저장
+
+### 🔧 System
+- `/setup-workspace` - 초기 워크스페이스 설정
+- `/inbox-processor` - Inbox 파일 정리
+- `/pull-all` / `/push-all` - Git 동기화
+
+### 🛠️ Setup Commands
+- `/setup-google-calendar` - Google Calendar 통합 설정
+- `/setup-web-crawler` - Web Crawler 스킬 설정
 
 ## Getting Started
 
