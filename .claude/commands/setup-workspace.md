@@ -59,3 +59,8 @@ README.md 참고 안내:
 2. **첫 Daily Note 작성** - `/daily-note` 실행
 3. **프로젝트 시작** - README의 "Getting Started" 참고
 4. **템플릿 활용** - `00-system/01-templates/` 확인
+
+**선택적: Skills 설정**:
+- **Google Calendar 연동** - `/setup-google-calendar` (5분 소요)
+- **Web Crawler + OCR** - `/setup-web-crawler` (10분 소요)
+- 자세한 내용: `skills/README.md` 참고
