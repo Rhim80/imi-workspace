@@ -1,27 +1,104 @@
 # Weekly Synthesis
 
-주간 회고를 작성합니다.
+Create a comprehensive synthesis of the week's work and thinking.
 
-## 실행
+## Analysis Process
 
-```bash
-/weekly-synthesis
+1. **Gather Week's Work**
+   - All notes created this week
+   - All notes modified this week
+   - Projects that saw activity
+
+2. **Identify Patterns**
+   - Recurring themes
+   - Common challenges
+   - Breakthrough moments
+   - Energy patterns (what energized vs drained)
+
+3. **Synthesize Learning**
+   - Key insights that emerged
+   - How thinking evolved
+   - Connections discovered
+   - Questions answered and raised
+
+4. **Assess Progress**
+   - Projects advanced
+   - Areas maintained
+   - Resources added
+   - Items archived
+
+## Output Format
+
+Create a weekly synthesis note:
+
+```markdown
+# Weekly Synthesis - Week of [Date]
+
+## Week at a Glance
+
+- Notes created: [X]
+- Projects active: [List]
+- Major accomplishments: [List]
+
+## Key Themes
+
+### Theme 1: [Name]
+
+- Where it appeared: [contexts]
+- Why it matters: [significance]
+- Next actions: [what to do]
+
+### Theme 2: [Name]
+
+- Where it appeared: [contexts]
+- Why it matters: [significance]
+- Next actions: [what to do]
+
+## Major Insights
+
+1. [Insight with context]
+2. [Insight with context]
+
+## Progress by Project
+
+### [Project Name]
+
+- What advanced:
+- What's blocked:
+- Next week's focus:
+
+## Questions Emerged
+
+- [Question 1 - and why it matters]
+- [Question 2 - and why it matters]
+
+## Energy Audit
+
+- What gave energy:
+- What drained energy:
+- What to adjust:
+
+## Connections Made
+
+- [Note A] ←→ [Note B]: [Why significant]
+- [Concept X] ←→ [Concept Y]: [New understanding]
+
+## Next Week's Intentions
+
+1. [Primary focus]
+2. [Secondary focus]
+3. [Thing to explore]
+
+## To Process
+
+- Inbox items: [count]
+- Orphaned notes: [list]
+- Missing connections: [identified]
 ```
 
-## 수행 작업
+## Follow-up Actions
 
-1. `40-personal/42-weekly/` 폴더 확인
-2. 이번 주차 파일(`YYYY-WXX.md`) 생성
-3. 이번 주 Daily Notes 분석
-4. 주간 회고 작성 도움
-
-## 템플릿
-
-`00-system/01-templates/weekly-review-template.md`
-
-## Weekly Review 내용
-
-- 이번 주 주요 성과
-- 배운 점
-- 개선할 점
-- 다음 주 계획
+- Archive completed projects
+- Clean up inbox
+- Update project status
+- Plan next week's focus

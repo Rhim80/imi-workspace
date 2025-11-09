@@ -6,244 +6,334 @@ allowed-tools: Bash, Read
 
 # Google Calendar Integration Skill
 
-이 Skill은 gcalcli를 사용하여 Google Calendar와 통합합니다.
+이 Skill은 **gcalcli**를 사용하여 Google Calendar와 통합합니다.
 
-## ⚠️ 사전 준비
+## ⚠️ 중요 규칙
 
-**첫 사용 시 OAuth 인증 필요:**
+### 일정 제목 작성 규칙
+**제목에 날짜/시간 절대 포함 금지**
+
+- ❌ "2025-11-13 13:00 커피챗"
+- ❌ "11월 13일 알파브라더스"
+- ❌ "2025-12-06 14:30 HFK 1회차"
+- ✅ "알파브라더스 채중규 대표 커피챗"
+- ✅ "HFK 겨울시즌 1회차: AI 파트너 만들기"
+
+**이유**: 날짜와 시간은 Google Calendar의 메타데이터로 관리되며, 제목에 중복 포함 시 혼란을 야기합니다.
+
+---
+
+## 🎯 주요 기능
+
+### 1. 일정 조회
+
+**사용 도구**: `gcalcli agenda`
+
+#### 기본 조회
 ```bash
-export PATH="$HOME/.local/bin:$PATH"
-gcalcli init
+# 오늘 일정
+gcalcli agenda
+
+# 특정 날짜 일정
+gcalcli agenda 2025-11-13
+
+# 특정 기간 일정
+gcalcli agenda 2025-11-13 2025-11-15
+
+# 특정 캘린더만 조회
+gcalcli agenda --calendar "Work"
+gcalcli agenda --calendar "개인+가족용"
+gcalcli agenda --calendar "Money"
+
+# 여러 캘린더 동시 조회
+gcalcli agenda --calendar "Work" --calendar "개인+가족용"
 ```
 
-브라우저에서 Google 계정으로 로그인하고 권한을 승인하세요.
-
-## 📂 스크립트 위치
-
-모든 스크립트는 다음 경로에 있습니다:
-```
-skills/google-calendar/scripts/
-```
-
-## 🎯 사용 시나리오 및 실행 방법
-
-### 1. 오늘 일정 조회
-
-**Trigger 키워드:**
-- "오늘 일정 뭐 있어?"
-- "오늘 스케줄 알려줘"
-- "today's schedule"
-- "오늘 뭐하지?"
-
-**실행:**
+#### TSV 형식 출력
 ```bash
-cd skills/google-calendar/scripts && python3 get_events.py
+# 파싱하기 쉬운 TSV 형식
+gcalcli agenda --tsv 2025-11-13 2025-11-14
+
+# 출력 형식:
+# start_date	start_time	end_date	end_time	title
 ```
 
-**출력 예시:**
-```
-- **09:00** 팀 미팅
-- **14:00** 프로젝트 리뷰 (@회의실 A)
-- **종일** 휴가
-```
-
-### 2. 이번 주 일정 조회 (Weekly Review용)
-
-**Trigger 키워드:**
-- "이번 주 일정 알려줘"
-- "이번 주 스케줄 뭐야?"
-- "weekly schedule"
-- "주간 일정 보여줘"
-
-**실행:**
+#### 상세 정보 포함
 ```bash
-cd skills/google-calendar/scripts && python3 get_week_events.py
+# 일정의 모든 정보 표시
+gcalcli agenda --details all 2025-11-13 2025-11-14
+
+# 출력 내용:
+# - Calendar name
+# - Link (Google Calendar URL)
+# - Location
+# - Duration
+# - Description
 ```
 
-**출력 예시:**
-```markdown
-## 이번 주 일정
+---
 
-### Mon Oct 21
-- **10:00** 프로젝트 미팅 (@Zoom)
-- **14:00** 스터디 준비
+### 2. 일정 검색
 
-### Tue Oct 22
-- **15:00** 온라인 교육 논의
-```
+**사용 도구**: `gcalcli search`
 
-### 3. 일정 검색
-
-**Trigger 키워드:**
-- "강릉 관련 일정 찾아줘"
-- "미팅 일정 검색해줘"
-- "search calendar for [키워드]"
-- "[키워드] 일정 언제야?"
-
-**실행:**
 ```bash
-cd skills/google-calendar/scripts && python3 search_events.py "강릉"
+# 기본 검색
+gcalcli search "검색어"
+
+# 특정 캘린더에서만 검색
+gcalcli search "HFK" --calendar "AI"
+
+# 예시
+gcalcli search "알파브라더스" --calendar "Work"
+gcalcli search "커피챗"
+gcalcli search "강릉"
 ```
 
-**출력 예시:**
-```markdown
-## 검색 결과
+---
 
-- **Mon Oct 21** 10:00 강릉 프로젝트 미팅 (@Zoom)
-- **Wed Oct 23** 14:00 강릉 카페 브랜드 기획
-```
+### 3. 일정 추가
 
-### 4. 일정 등록
-
-**Trigger 키워드:**
-- "일정", "스케줄", "캘린더"
-- 추가, 등록, 잡아줘
-
-**실행:**
+**형식**:
 ```bash
-cd skills/google-calendar/scripts
-python3 add_event.py "<캘린더>" "<제목>" "<날짜>" "<시간>" [지속시간(분)]
+gcalcli add --calendar "캘린더명" \
+  --when "YYYY-MM-DD HH:MM" \
+  --duration 분 \
+  --title "제목" \
+  --where "장소" \
+  --description "설명"
 ```
 
-**예시:**
+**필수 규칙**:
+- `--title`: **날짜/시간 포함 금지**
+- `--when`: ISO 형식 날짜 + 시간
+- `--duration`: 분 단위 (기본값 없음, 반드시 지정)
+
+**예시**:
 ```bash
-# 기본 (2.5시간 자동)
-python3 add_event.py "AI" "HFK 1회차" "2025-12-06" "14:30"
+# 커피챗 일정 (1시간)
+gcalcli add --calendar "Work" \
+  --when "2025-11-13 13:00" \
+  --duration 60 \
+  --title "알파브라더스 채중규 대표 커피챗" \
+  --where "가양역, 강서구 공항대로 45길 71 3층" \
+  --description "알파브라더스 채중규 대표님과 커피챗"
 
-# 지속 시간 지정
-python3 add_event.py "AI" "팀 미팅" "2025-12-06" "14:30" "60"
+# 강의 일정 (2.5시간)
+gcalcli add --calendar "AI" \
+  --when "2025-12-06 14:30" \
+  --duration 150 \
+  --title "HFK 겨울시즌 1회차: AI 파트너 만들기"
+
+# 미팅 일정 (1.5시간)
+gcalcli add --calendar "Work" \
+  --when "2025-12-10 10:00" \
+  --duration 90 \
+  --title "강릉 프로젝트 2차 미팅" \
+  --where "zoom"
 ```
 
-**파라미터:**
-- 캘린더: "AI", "Work", "개인 + 가족용", "Money"
-- 제목: 일정 제목 (따옴표로 감싸기)
-- 날짜: YYYY-MM-DD 형식
-- 시간: HH:MM 형식 (24시간)
-- 지속시간: 분 단위 (선택, 기본 150분 = 2.5시간)
+---
 
-**출력 예시:**
-```
-📅 일정 추가 중...
-   캘린더: AI
-   제목: HFK 1회차
-   시작: 2025-12-06 14:30
-   시간: 150분 (2.5시간)
-✅ 일정이 추가되었습니다!
-```
+### 4. 일정 수정
 
-## 🔧 고급 기능 (gcalcli 직접 사용)
+**사용 도구**: `gcalcli edit`
 
-사용자가 더 복잡한 작업을 요청하면 gcalcli를 직접 호출하세요:
-
-### 캘린더 뷰 (주간/월간)
 ```bash
-export PATH="$HOME/.local/bin:$PATH"
-gcalcli calw  # 주간 캘린더
-gcalcli calm  # 월간 캘린더
+# 대화형 편집
+gcalcli edit "검색어"
+
+# 예시: "강릉" 포함된 일정 수정
+gcalcli edit "강릉"
 ```
 
-### 일정 수정
+**⚠️ 제약**: 대화형 프롬프트로 Claude Code 환경에서 제한적
+
+**해결책**: 기존 일정 삭제 후 새로 생성
 ```bash
-gcalcli edit "강릉"  # "강릉" 포함 일정 수정
+# 1. 기존 일정 삭제
+gcalcli delete "검색어" --iamaexpert
+
+# 2. 새 일정 생성
+gcalcli add --calendar "Work" --when "..." --title "..."
 ```
 
-### 일정 삭제
+---
+
+### 5. 일정 삭제
+
+**사용 도구**: `gcalcli delete`
+
+#### 기본 삭제 (대화형)
 ```bash
-gcalcli delete "테스트"  # "테스트" 포함 일정 삭제
+gcalcli delete "검색어"
 ```
 
-### 날짜 범위 조회
+#### 자동 삭제 (권장)
 ```bash
-gcalcli agenda "3 days"           # 앞으로 3일
-gcalcli agenda "monday" "friday"  # 이번 주 월~금
+# --iamaexpert: 확인 없이 자동 삭제
+gcalcli delete "검색어" --iamaexpert
+
+# 특정 캘린더에서만 삭제
+gcalcli delete "검색어" --calendar "Work" --iamaexpert
 ```
+
+**예시**:
+```bash
+# 잘못 생성한 일정 삭제
+gcalcli delete "2025-11-13 알파브라더스" --iamaexpert
+
+# 특정 일정만 삭제
+gcalcli delete "알파브라더스 커피챗" --calendar "Work" --iamaexpert
+```
+
+**⚠️ 주의**: `--iamaexpert` 옵션은 확인 없이 즉시 삭제하므로 신중히 사용
+
+---
 
 ## 📝 PKM 통합
 
 ### Daily Note (`/daily-note`)
 
-Daily Note 생성 시 `get_events.py`가 자동으로 실행되어 `{{calendar_events}}` placeholder를 채웁니다.
+Daily Note 생성 시 Google Calendar 일정을 자동으로 가져옵니다.
 
-**Daily Note 예시:**
+**동작 방식**:
+1. `gcalcli agenda --calendar "Work" --calendar "개인+가족용" --tsv` 실행
+2. TSV 출력을 파싱하여 Markdown 리스트로 변환
+3. Daily Note 템플릿의 `{{calendar_events}}` placeholder에 삽입
+
+**Daily Note 예시**:
 ```markdown
 ### 📅 스케줄
 
-#### Google Calendar
-- **10:00** 프로젝트 미팅 (@Zoom)
-- **14:00** 스터디 준비
+#### Google Calendar (일정)
+- **13:00-14:00**: 알파브라더스 채중규 대표 커피챗
+- **14:30-17:00**: HFK 1회차 강의
+
+#### 💰 알림 (대출/카드)
+일정이 없습니다.
 ```
 
 ### Weekly Review
 
-Weekly Review 작성 시 `get_week_events.py`를 사용하여 이번 주 일정을 요약합니다.
-
 ```bash
-python3 get_week_events.py
+# 이번 주 일정 조회
+gcalcli agenda "monday" "sunday"
+
+# 주간 캘린더 뷰
+gcalcli calw
+
+# 월간 캘린더 뷰
+gcalcli calm
 ```
 
-### 프로젝트 미팅 검색
+---
 
-특정 프로젝트의 미팅 일정을 찾을 때:
+## 💡 캘린더 종류
+
+### 사용 가능한 캘린더
+1. **Work**: 업무 일정 (미팅, 강의, 프로젝트)
+2. **AI**: AI 교육 관련 (GPTers, HFK, 강의)
+3. **개인+가족용**: 개인 및 가족 일정
+4. **Money**: 금융 알림 (대출, 카드 결제)
+
+### 캘린더 목록 확인
 ```bash
-python3 search_events.py "프로젝트명"
+gcalcli list
 ```
 
-## ⚠️ 에러 처리
-
-### "Google Calendar 인증이 필요합니다"
-**해결:**
+### 특정 캘린더 지정
 ```bash
-export PATH="$HOME/.local/bin:$PATH"
-gcalcli init
+# 단일 캘린더
+gcalcli agenda --calendar "Work"
+
+# 여러 캘린더
+gcalcli agenda --calendar "Work" --calendar "AI"
 ```
 
-### "gcalcli가 설치되지 않았습니다"
-**해결:**
+---
+
+## ⚠️ 사전 준비
+
+### gcalcli 설치
 ```bash
 pipx install gcalcli
 ```
 
-## 🎯 사용 예시
-
-**대화형 사용:**
-```
-사용자: "오늘 일정 뭐 있어?"
-Claude: (google-calendar skill 자동 실행)
-- **10:00** 프로젝트 미팅 (@Zoom)
-- **14:00** 스터디 준비
+### OAuth 인증 (첫 사용 시)
+```bash
+gcalcli init
 ```
 
+브라우저에서 Google 계정으로 로그인하고 권한을 승인하세요.
+
+**인증 토큰 저장 위치**:
 ```
-사용자: "강릉 관련 미팅 언제야?"
-Claude: (google-calendar skill 자동 실행 - search)
-## 검색 결과
-- **Mon Oct 21** 10:00 강릉 프로젝트 미팅 (@Zoom)
+~/.gcalcli_oauth
 ```
 
-```
-사용자: "AI 캘린더에 내일 오후 3시에 클라이언트 미팅 잡아줘"
-Claude: (google-calendar skill 자동 실행 - add)
-📅 일정 추가 중...
-   캘린더: AI
-   제목: 클라이언트 미팅
-   시작: 2025-11-01 15:00
-   시간: 150분 (2.5시간)
-✅ 일정이 추가되었습니다!
+---
+
+## 🔧 트러블슈팅
+
+### 1. "Google Calendar 인증이 필요합니다"
+**해결**:
+```bash
+gcalcli init
 ```
 
-## 💡 스크립트 선택 가이드
+### 2. "gcalcli가 설치되지 않았습니다"
+**해결**:
+```bash
+pipx install gcalcli
+pipx ensurepath
+export PATH="$HOME/.local/bin:$PATH"
+```
 
-| 사용자 요청 | 실행할 스크립트 | 커맨드 |
-|-----------|--------------|--------|
-| "오늘 일정" | get_events.py | `python3 get_events.py` |
-| "이번 주 일정" | get_week_events.py | `python3 get_week_events.py` |
-| "키워드 검색" | search_events.py | `python3 search_events.py "키워드"` |
-| "일정 추가" | add_event.py | `python3 add_event.py "캘린더" "제목" "날짜" "시간" [분]` |
-| "주간 캘린더 뷰" | gcalcli 직접 | `gcalcli calw` |
-| "월간 캘린더 뷰" | gcalcli 직접 | `gcalcli calm` |
+### 3. 대화형 프롬프트 문제
+**문제**: `edit`, `delete` 명령어가 대화형 입력 요구
+
+**해결**:
+```bash
+# --iamaexpert 옵션 사용 (확인 없이 실행)
+gcalcli delete "검색어" --iamaexpert
+```
+
+### 4. 잘못된 제목으로 생성된 일정
+**문제**: 제목에 날짜/시간 포함
+
+**해결**:
+```bash
+# 1. 잘못된 일정 삭제
+gcalcli delete "2025-11-13 13:00 커피챗" --iamaexpert
+
+# 2. 올바른 제목으로 재생성
+gcalcli add --calendar "Work" \
+  --when "2025-11-13 13:00" \
+  --duration 60 \
+  --title "알파브라더스 커피챗"
+```
+
+---
 
 ## 🔐 보안
 
-- OAuth 토큰은 `~/.gcalcli_oauth`에 저장됩니다.
-- 이 파일은 `.gitignore`에 포함되어야 합니다.
-- 본인 Google 계정만 접근 가능합니다.
+- OAuth 토큰은 `~/.gcalcli_oauth`에 저장됩니다
+- 이 파일은 `.gitignore`에 포함되어야 합니다
+- 본인 Google 계정만 접근 가능합니다
+
+---
+
+## 📚 참고 자료
+
+- gcalcli 공식 문서: https://github.com/insanum/gcalcli
+- 모든 명령어: `gcalcli --help`
+- 특정 명령어 도움말: `gcalcli add --help`
+
+---
+
+## 📝 Version History
+
+- **2025-11-09**: 제목 규칙 강화, gcalcli 직접 사용법 추가, --iamaexpert 옵션 명시
+- **2025-10-31**: Daily Note 통합 추가
+- **2025-10-22**: 초기 작성

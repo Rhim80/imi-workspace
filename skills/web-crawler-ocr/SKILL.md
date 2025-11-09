@@ -4,178 +4,216 @@ description: 웹페이지 크롤링 + 이미지 OCR 자동 분석. "이 URL 분�
 allowed-tools: Bash, Read, Write
 ---
 
-# Web Crawler + Gemini OCR Integration Skill
+# Web Crawler + Gemini OCR Skill
 
-웹페이지의 텍스트와 이미지를 완전하게 추출하여 마크다운 파일로 저장합니다.
+Extract complete web page content (text + images) and save as markdown file.
 
-## ⚠️ 사전 준비
+## When to Use This Skill
 
-**첫 사용 시 설정 필요:**
+This skill automatically activates when the user:
+- Provides a URL: "https://example.com analyze this"
+- Requests web crawling: "crawl this website", "extract webpage content"
+- Mentions competitor analysis: "analyze competitor site"
+- Needs image OCR from web: "OCR images from this page"
+- Wants to bypass 5MB limit: "large images on this site"
 
-1. **Python 가상환경 및 패키지 설치** (자동화: `/setup-web-crawler` 사용)
-2. **API 키 설정** (수동 필요):
-   ```bash
-   export GEMINI_API_KEY="your_gemini_api_key_here"
-   export FIRECRAWL_API_KEY="your_firecrawl_api_key_here"
-   ```
+## What This Skill Does
 
-자세한 설정은 [SETUP_GUIDE.md](./SETUP_GUIDE.md)를 참고하세요.
+1. **Firecrawl**: Clean text extraction (removes ads/clutter)
+2. **Gemini OCR**: Extract text from images (up to 20MB per image)
+3. **Complete Markdown**: Text + image analysis in one file
 
-## 🎯 사용 시나리오 및 실행 방법
+## Instructions
 
-### 1. 경쟁사 웹사이트 분석
+### Step 1: Identify the URL
+Extract URL(s) from user message:
+- Look for `https://` or `http://`
+- Multiple URLs? Process each one
 
-**Trigger 키워드:**
-- "이 경쟁사 사이트 분석해줘: https://competitor-cafe.com"
-- "크롤링해줘: https://example.com"
+### Step 2: Determine Output Location
 
-**실행 과정:**
-1. URL 식별
-2. 적절한 저장 경로 결정 (예: `50-resources/competitor-analysis/`)
-3. 스크립트 실행:
-   ```bash
-   cd skills/web-crawler-ocr/scripts && \
-   source venv/bin/activate && \
-   python3 web-crawler.py "https://competitor-cafe.com" "../../50-resources/competitor-analysis/competitor-cafe-20251031.md"
-   ```
-4. 결과 파일 읽기 및 인사이트 제공
+Based on user context, choose appropriate path:
 
-**출력 위치:**
-- 경쟁사 분석: `50-resources/competitor-analysis/`
-- 교육 자료: `10-projects/12-education/{project}/`
-- 일반 리서치: `50-resources/web-research/`
-
-### 2. 여러 URL 일괄 처리
-
-**Trigger 키워드:**
-- "이 3개 사이트 분석해줘: https://a.com, https://b.com, https://c.com"
-
-**실행:**
-각 URL을 순차적으로 처리하고 비교 분석 제공
-
-### 3. 대용량 이미지 OCR
-
-**Trigger 키워드:**
-- "이 페이지 이미지들 OCR 해줘"
-- "큰 이미지 있는데 분석해줘"
-
-**장점:**
-- Claude의 5MB 이미지 제한 우회
-- Gemini OCR로 20MB 이미지 처리
-- 웹페이지 내 모든 이미지 자동 추출 및 분석
-
-## 🔧 스크립트 실행 예시
-
-### 기본 사용
-
-```bash
-cd skills/web-crawler-ocr/scripts
-source venv/bin/activate
-python3 web-crawler.py "https://example.com"
+**Competitor Analysis:**
+```
+/Users/rhim/Projects/pkm/50-resources/competitor-analysis/
 ```
 
-### 출력 파일 지정
-
-```bash
-python3 web-crawler.py "https://competitor.com" "../../50-resources/competitor-analysis/result.md"
+**Educational Reference (e.g. HFK):**
+```
+/Users/rhim/Projects/pkm/10-projects/12-education/{project-folder}/
 ```
 
-### 환경변수 확인
+**General Web Research:**
+```
+/Users/rhim/Projects/pkm/50-resources/web-research/
+```
+
+**Filename:** Use domain + timestamp or user-specified name.
+
+### Step 3: Execute Web Crawler Script
 
 ```bash
+cd /Users/rhim/Projects/tools/web-crawler-ocr && \
+source venv/bin/activate && \
+python3 web-crawler.py "<URL>" "<output-path>"
+```
+
+**Important:**
+- Always use full absolute paths
+- Quote URLs to handle special characters
+- Ensure output directory exists (create with `mkdir -p` if needed)
+
+### Step 4: Read and Analyze Results
+
+1. Use Read tool to open generated markdown file
+2. Extract key insights
+3. Summarize for user
+
+### Step 5: Suggest Next Steps
+
+- Additional URLs to analyze?
+- Comparative analysis needed?
+- PKM organization suggestions?
+
+## Examples
+
+### Example 1: Competitor Cafe Analysis
+
+**User:** "Analyze this competitor cafe website: https://competitor-cafe.com"
+
+**Claude Actions:**
+```bash
+# 1. Ensure directory exists
+mkdir -p /Users/rhim/Projects/pkm/50-resources/competitor-analysis
+
+# 2. Run crawler
+cd /Users/rhim/Projects/tools/web-crawler-ocr && \
+source venv/bin/activate && \
+python3 web-crawler.py \
+    "https://competitor-cafe.com" \
+    /Users/rhim/Projects/pkm/50-resources/competitor-analysis/competitor-cafe-20251029.md
+
+# 3. Read results (use Read tool)
+# 4. Provide analysis
+```
+
+**Response:**
+"Crawled competitor website successfully. Extracted 3,500 characters + 5 images with OCR.
+
+Key insights:
+1. Brand positioning: ...
+2. Menu structure: ...
+3. Differentiators: ..."
+
+### Example 2: HFK Reference Material
+
+**User:** "Analyze HFK AI team page: https://hfk.me/ai-team"
+
+**Claude Actions:**
+```bash
+mkdir -p /Users/rhim/Projects/pkm/10-projects/12-education/12.06-hfk-winter-ai
+
+cd /Users/rhim/Projects/tools/web-crawler-ocr && \
+source venv/bin/activate && \
+python3 web-crawler.py \
+    "https://hfk.me/ai-team" \
+    /Users/rhim/Projects/pkm/10-projects/12-education/12.06-hfk-winter-ai/hfk-ai-team-reference.md
+```
+
+### Example 3: Multiple URLs
+
+**User:** "Analyze these 3 competitor sites:
+- https://cafe-a.com
+- https://cafe-b.com
+- https://cafe-c.com"
+
+**Claude:** Process each URL sequentially, then provide comparative analysis.
+
+## Environment Setup
+
+### Required Environment Variables
+
+This skill requires two API keys:
+
+```bash
+export GEMINI_API_KEY="your_gemini_key_here"
+export FIRECRAWL_API_KEY="your_firecrawl_key_here"
+```
+
+### Alternative: .env File
+
+Create `/Users/rhim/Projects/tools/web-crawler-ocr/.env`:
+```
+GEMINI_API_KEY=your_gemini_key_here
+FIRECRAWL_API_KEY=your_firecrawl_key_here
+```
+
+### Check Setup
+
+```bash
+# Verify .env file
+cat /Users/rhim/Projects/tools/web-crawler-ocr/.env
+
+# Test script
+cd /Users/rhim/Projects/tools/web-crawler-ocr && \
+source venv/bin/activate && \
+python3 web-crawler.py
+```
+
+## Limitations
+
+- **Gemini Free Tier**: 15 requests per minute
+- **Firecrawl Free Tier**: 500 credits
+- **Image Limit**: Maximum 10 images per page
+- **File Size**: 20MB per image maximum
+
+## Troubleshooting
+
+### API Key Errors
+
+```bash
+# Check if keys are set
 echo $GEMINI_API_KEY
 echo $FIRECRAWL_API_KEY
+
+# Set if missing
+export GEMINI_API_KEY="your_key"
+export FIRECRAWL_API_KEY="your_key"
 ```
 
-## 📋 출력 형식
-
-생성되는 마크다운 파일 구조:
-
-```markdown
-# 페이지 제목
-
-> 출처: https://example.com
-> 크롤링: 2025-10-31 15:30:00
-> 도구: Firecrawl + Gemini OCR
-
----
-
-## 📄 텍스트 내용
-
-[Firecrawl로 추출한 깨끗한 텍스트]
-
----
-
-## 🖼️ 이미지 분석 (Gemini OCR)
-
-### 이미지 1
-- **URL**: https://example.com/image1.jpg
-- **Alt 텍스트**: Product photo
-
-**분석 결과:**
-
-[Gemini가 추출한 이미지 텍스트 및 설명]
-```
-
-## 🔍 작동 원리
-
-1. **Firecrawl**: 웹페이지의 깨끗한 텍스트 추출 (광고/잡음 제거)
-2. **이미지 다운로드**: HTML에서 이미지 URL 추출 및 다운로드
-3. **Gemini OCR**: 각 이미지에서 텍스트 추출 및 내용 분석
-4. **마크다운 생성**: 텍스트 + 이미지 분석을 하나의 마크다운으로 통합
-
-## ⚠️ 제한사항
-
-- **Gemini Free Tier**: 분당 15개 요청
-- **Firecrawl Free Tier**: 500 크레딧
-- **이미지 제한**: 페이지당 최대 10개 이미지 처리
-- **파일 크기**: 이미지당 최대 20MB
-
-## 🛠 트러블슈팅
-
-### API 키 오류
+### Python Package Errors
 
 ```bash
-# 환경변수 확인
-echo $GEMINI_API_KEY
-echo $FIRECRAWL_API_KEY
-
-# 환경변수 설정
-export GEMINI_API_KEY="your_key_here"
-export FIRECRAWL_API_KEY="your_key_here"
-```
-
-### Python 패키지 오류
-
-```bash
-cd skills/web-crawler-ocr/scripts
+cd /Users/rhim/Projects/tools/web-crawler-ocr
 source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 스크립트를 찾을 수 없음
+### Script Not Found
 
+Verify script location:
 ```bash
-ls -la skills/web-crawler-ocr/scripts/web-crawler.py
+ls -la /Users/rhim/Projects/tools/web-crawler-ocr/web-crawler.py
 ```
 
-## 📚 관련 문서
+## Script Location
 
-- **설정 가이드**: [SETUP_GUIDE.md](./SETUP_GUIDE.md)
-- **빠른 시작**: [README.md](./README.md)
-- **자동화 커맨드**: `/setup-web-crawler`
+- **Main Script**: `/Users/rhim/Projects/tools/web-crawler-ocr/web-crawler.py`
+- **Config**: `/Users/rhim/Projects/tools/web-crawler-ocr/.env`
+- **Virtual Env**: `/Users/rhim/Projects/tools/web-crawler-ocr/venv/`
+- **Guide**: `/Users/rhim/Projects/tools/web-crawler-ocr/README.md`
 
-## 🎓 PKM 통합
+## Inspired By
 
-이 skill은 다음 워크플로우에서 유용합니다:
-
-1. **경쟁사 분석**: 경쟁사 웹사이트 → 마크다운 → 인사이트 추출
-2. **교육 자료 수집**: 참고 사이트 → 정리된 문서 → 강의 자료화
-3. **리서치 자동화**: 여러 URL → 일괄 크롤링 → 비교 분석
-
-## 🔗 영감
-
-이 skill은 Noah Brier의 [Claudesidian](https://github.com/heyitsnoah/claudesidian) 프로젝트에서 영감을 받았습니다:
+Noah Brier's Claudesidian project:
 - Firecrawl for web research
 - Gemini for large image/PDF analysis
 - Unix philosophy: simple composable tools
+
+## Version History
+
+- **v1.0.0 (2025-10-29)**: Initial skill creation
+  - Firecrawl + Gemini OCR integration
+  - Model-invoked automation
+  - PKM-aware file organization
