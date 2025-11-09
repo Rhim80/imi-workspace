@@ -238,7 +238,7 @@ owner  your-email@gmail.com
 
 **오늘 일정 조회 테스트:**
 ```bash
-cd skills/google-calendar/scripts
+cd .claude/skills/google-calendar/scripts
 python3 get_events.py
 ```
 
@@ -266,7 +266,7 @@ python3 get_events.py
    - /daily-note 실행 시 자동으로 오늘 일정 포함
 
 4. **직접 스크립트 실행**
-   cd skills/google-calendar/scripts
+   cd .claude/skills/google-calendar/scripts
    python3 get_events.py        # 오늘 일정
    python3 get_week_events.py   # 이번 주 일정
    python3 search_events.py "키워드"  # 검색
@@ -277,8 +277,8 @@ python3 get_events.py
    gcalcli calm      # 월간 캘린더
 
 **더 알아보기:**
-- 상세 가이드: skills/google-calendar/SETUP_GUIDE.md
-- 사용법: skills/google-calendar/SKILL.md
+- 상세 가이드: .claude/skills/google-calendar/SETUP_GUIDE.md
+- 사용법: .claude/skills/google-calendar/SKILL.md
 
 **테스트해보세요:**
 "오늘 일정 뭐 있어?"

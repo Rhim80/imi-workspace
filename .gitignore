@@ -26,6 +26,12 @@ scripts/*_local.sh
 00-system/02-scripts/calendar/credentials.json
 00-system/02-scripts/calendar/token.pickle
 
+# Project skills - sensitive data
+.claude/skills/*/scripts/.env
+.claude/skills/*/scripts/venv/
+.claude/skills/*/scripts/*.pyc
+.claude/skills/*/scripts/__pycache__/
+
 # macOS files
 .DS_Store
 

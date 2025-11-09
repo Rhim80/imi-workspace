@@ -6,7 +6,7 @@
 
 ### Phase 1: 자동 설치 (Claude가 실행)
 1. ✅ Python 및 pip 확인
-2. ✅ 가상환경 생성 (`skills/web-crawler-ocr/scripts/venv`)
+2. ✅ 가상환경 생성 (`.claude/.claude/skills/web-crawler-ocr/scripts/venv`)
 3. ✅ Python 패키지 설치 (requests, firecrawl-py, google-generativeai 등)
 4. ✅ 설치 확인 테스트
 
@@ -53,7 +53,7 @@ python3 -m pip --version
 
 **2-1. 작업 디렉토리 이동:**
 ```bash
-cd skills/web-crawler-ocr/scripts
+cd .claude/.claude/skills/web-crawler-ocr/scripts
 ```
 
 **2-2. 가상환경 생성:**
@@ -139,7 +139,7 @@ pip list | grep -E "(requests|beautifulsoup4|firecrawl|google-generativeai|pytho
 ```
 API 키 발급이 완료되면, 다음 명령어로 .env 파일을 생성하세요:
 
-cd skills/web-crawler-ocr/scripts
+cd .claude/.claude/skills/web-crawler-ocr/scripts
 cat > .env <<'EOF'
 GEMINI_API_KEY=your_gemini_api_key_here
 FIRECRAWL_API_KEY=your_firecrawl_api_key_here
@@ -149,7 +149,7 @@ EOF
 nano .env
 
 또는 Claude Code에게 요청:
-"skills/web-crawler-ocr/scripts/.env 파일 만들어줘.
+".claude/skills/web-crawler-ocr/scripts/.env 파일 만들어줘.
 GEMINI_API_KEY=AIzaSy...
 FIRECRAWL_API_KEY=fc-..."
 ```
@@ -165,7 +165,7 @@ FIRECRAWL_API_KEY=fc-XXXXXXXXXXXXXXXXXXXXXXXX
 API 키가 설정되었는지 확인:
 
 ```bash
-cd skills/web-crawler-ocr/scripts
+cd .claude/.claude/skills/web-crawler-ocr/scripts
 if [ -f .env ]; then
   echo "✅ .env 파일이 존재합니다."
   echo ""
@@ -201,7 +201,7 @@ fi
 **5-2. 테스트 실행 (사용자가 원하는 경우):**
 
 ```bash
-cd skills/web-crawler-ocr/scripts && \
+cd .claude/.claude/skills/web-crawler-ocr/scripts && \
 source venv/bin/activate && \
 python3 web-crawler.py https://example.com test-output.md
 ```
@@ -220,7 +220,7 @@ python3 web-crawler.py https://example.com test-output.md
   [1/1] https://example.com/iana-logo.svg
 
 ================================================================================
-✅ 완료: /Users/rhim/Projects/imi-workspace/skills/web-crawler-ocr/scripts/test-output.md
+✅ 완료: /Users/rhim/Projects/imi-workspace/.claude/skills/web-crawler-ocr/scripts/test-output.md
 ================================================================================
 ```
 
@@ -251,7 +251,7 @@ ls -lh test-output.md && head -20 test-output.md
    "이 3개 사이트 크롤링해줘"
 
 2️⃣ 직접 실행:
-   cd skills/web-crawler-ocr/scripts
+   cd .claude/.claude/skills/web-crawler-ocr/scripts
    source venv/bin/activate
    python3 web-crawler.py <URL> [출력파일명]
 
@@ -300,7 +300,7 @@ python3 -m venv venv
 python3 -m pip install --upgrade pip
 
 # requirements.txt 재설치
-cd skills/web-crawler-ocr/scripts
+cd .claude/.claude/skills/web-crawler-ocr/scripts
 source venv/bin/activate
 pip install -r requirements.txt --upgrade
 ```
@@ -315,10 +315,10 @@ pip install -r requirements.txt --upgrade
 **해결:**
 ```bash
 # .env 파일 확인
-cat skills/web-crawler-ocr/scripts/.env
+cat .claude/skills/web-crawler-ocr/scripts/.env
 
 # 없으면 생성
-cd skills/web-crawler-ocr/scripts
+cd .claude/.claude/skills/web-crawler-ocr/scripts
 cat > .env <<'EOF'
 GEMINI_API_KEY=your_gemini_key
 FIRECRAWL_API_KEY=your_firecrawl_key
@@ -354,7 +354,7 @@ venv\Scripts\activate
 설정 완료 후 다음을 확인합니다:
 
 - [ ] Python 3.8 이상 설치됨
-- [ ] 가상환경 생성됨 (`skills/web-crawler-ocr/scripts/venv/`)
+- [ ] 가상환경 생성됨 (`.claude/skills/web-crawler-ocr/scripts/venv/`)
 - [ ] 필수 패키지 6개 설치됨
 - [ ] .env 파일 생성됨
 - [ ] Gemini API Key 설정됨

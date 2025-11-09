@@ -60,7 +60,11 @@ README.md 참고 안내:
 3. **프로젝트 시작** - README의 "Getting Started" 참고
 4. **템플릿 활용** - `00-system/01-templates/` 확인
 
-**선택적: Skills 설정**:
+**선택적: Skills 설정** (프로젝트 전용):
 - **Google Calendar 연동** - `/setup-google-calendar` (5분 소요)
 - **Web Crawler + OCR** - `/setup-web-crawler` (10분 소요)
-- 자세한 내용: `skills/README.md` 참고
+- 자세한 내용: `.claude/skills/README.md` 참고
+
+> **프로젝트 스킬이란?**
+> 이 워크스페이스에만 적용되는 skills입니다.
+> 전역 스킬(`~/.claude/skills/`)과 독립적으로 작동합니다.

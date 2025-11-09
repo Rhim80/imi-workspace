@@ -334,9 +334,11 @@ cp -r 10-projects/00-working-backwards-template/ 10-projects/11-my-project/
 - `/inbox-processor` - Inbox 파일 정리
 - `/pull-all` / `/push-all` - Git 동기화
 
-### 🛠️ Setup Commands
+### 🛠️ Setup Commands (Project Skills)
 - `/setup-google-calendar` - Google Calendar 통합 설정
 - `/setup-web-crawler` - Web Crawler 스킬 설정
+
+> **프로젝트 스킬 (`.claude/skills/`)**: 이 워크스페이스에만 적용되는 skills로, 전역 스킬(`~/.claude/skills/`)과 독립적으로 작동합니다. GPTers 참가자들이 각자 독립적으로 skills를 설정할 수 있습니다.
 
 ## Getting Started
 
