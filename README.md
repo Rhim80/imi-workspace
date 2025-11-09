@@ -3,10 +3,82 @@
 > AI-powered workspace for non-coders
 > 비개발자를 위한 AI 작업 환경
 
+---
+
+## 🎓 GPTers 19기 스터디 참가자
+
+**"Working Backwards로 만드는 나의 비즈니스 청사진"** 스터디에 오신 것을 환영합니다!
+
+### 빠른 시작 (5분)
+
+```bash
+# 1. Clone
+git clone https://github.com/Rhim80/imi-workspace.git
+cd imi-workspace
+
+# 2. 초기 설정 실행
+/setup-workspace
+
+# 3. Working Backwards 템플릿 복사
+cp -r 10-projects/00-working-backwards-template/ 10-projects/11-my-project/
+cd 10-projects/11-my-project/
+```
+
+### 4주 워크플로우
+
+#### Week 1: PR/FAQ 작성
+```bash
+# Step 1: PR 작성
+/working-backwards-pr
+# → pr-document.md 완성
+
+# Step 2: FAQ 작성
+# faq.md 직접 작성
+
+# Step 3: 진행 기록
+/daily-note
+```
+
+#### Week 2: 로드맵 생성
+```bash
+# Step 1: 피드백 반영
+# pr-document.md v2.0 업데이트
+
+# Step 2: 역순 로드맵 생성
+/generate-roadmap
+# → roadmap.md 완성
+```
+
+#### Week 3-4: 실행 및 발표
+- 고객 인터뷰: `customer-research/interview-*.md`
+- 일일 진행: `daily-progress/` 또는 `/daily-note`
+- 최종 발표: `final-presentation/presentation-outline.md`
+
+### 핵심 커맨드
+
+| 커맨드 | 용도 | 소요 시간 |
+|--------|------|-----------|
+| `/setup-workspace` | 초기 설정 | 5분 |
+| `/working-backwards-pr` | PR/FAQ 생성 | 45-60분 |
+| `/generate-roadmap` | 역순 로드맵 | 20-30분 |
+| `/thinking-partner` | 아이디어 구체화 | 수시 |
+| `/daily-note` | 진행 기록 | 매일 10분 |
+
+### 템플릿 위치
+
+- **프로젝트 템플릿**: `10-projects/00-working-backwards-template/`
+- **PR/FAQ 템플릿**: `00-system/01-templates/pr-faq-template.md`
+- **인터뷰 템플릿**: `00-system/01-templates/interview-template.md`
+
+---
+
 ## What is IMI Workspace?
 
 Claude Code와 Johnny Decimal 시스템을 결합한 실전 PKM 워크스페이스입니다.
 15년 F&B 경력 + AI 활용 전문가의 실제 시스템을 기반으로 만들어졌습니다.
+
+**GPTers 스터디 참가자**: 위의 🎓 섹션을 먼저 보세요!
+**일반 사용자**: 아래 Quick Start부터 시작하세요.
 
 ## Quick Start
 
@@ -220,6 +292,24 @@ imi-workspace/
 - **weekly-review-template.md** - 주간 회고
 - **Project Template.md** - 새 프로젝트 시작
 - **pr-faq-template.md** - Amazon Working Backwards PR/FAQ 문서
+- **interview-template.md** - 고객 인터뷰 가이드 (NEW ✨)
+
+### Working Backwards 프로젝트 템플릿
+
+`10-projects/00-working-backwards-template/` - 완전한 프로젝트 구조
+
+**포함 내용:**
+- `pr-document.md` - PR 작성 공간
+- `faq.md` - FAQ 작성 공간
+- `roadmap.md` - 역순 로드맵
+- `customer-research/` - 고객 인터뷰 노트
+- `daily-progress/` - 일일 진행 기록
+- `final-presentation/` - 최종 발표 자료
+
+**사용법:**
+```bash
+cp -r 10-projects/00-working-backwards-template/ 10-projects/11-my-project/
+```
 
 ## Slash Commands
 
