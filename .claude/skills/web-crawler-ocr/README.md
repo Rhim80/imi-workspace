@@ -18,12 +18,12 @@ This skill **automatically activates** when you mention:
 2. **Gemini OCR**: Analyzes images up to 20MB (bypasses Claude's 5MB limit)
 3. **Complete Markdown**: Saves text + image analysis in one file
 
-## Setup Complete ✅
+## Setup Requirements
 
-- [x] SKILL.md created at `~/.claude/skills/web-crawler-ocr/SKILL.md`
-- [x] API keys configured in `.env`
-- [x] Python dependencies installed
-- [x] Script ready at `/home/rhim/claude-projects/tools/web-crawler-ocr/web-crawler.py`
+- [ ] SKILL.md created at `.claude/skills/web-crawler-ocr/SKILL.md`
+- [ ] API keys configured in `scripts/.env`
+- [ ] Python dependencies installed (run `bash scripts/setup.sh`)
+- [ ] Scripts ready in `scripts/` folder
 
 ## Test It Now
 
@@ -57,11 +57,22 @@ Results automatically saved to:
 - **Education reference**: `~/pkm/10-projects/12-education/{project}/`
 - **General research**: `~/pkm/03-resources/web-research/`
 
-## API Keys (Already Configured)
+## API Keys Setup
 
+**⚠️ Security Notice**: Never commit actual API keys to Git!
+
+Create `.env` file in `scripts/` folder:
+
+```bash
+cd .claude/skills/web-crawler-ocr/scripts
+cp .env.example .env
+# Edit .env with your actual API keys
 ```
-GEMINI_API_KEY=YOUR_GEMINI_API_KEY_HERE
-FIRECRAWL_API_KEY=YOUR_FIRECRAWL_API_KEY_HERE
+
+Example `.env` format:
+```
+GEMINI_API_KEY=your_gemini_api_key_here
+FIRECRAWL_API_KEY=your_firecrawl_api_key_here
 ```
 
 ## Limitations
@@ -80,22 +91,25 @@ ls -la ~/.claude/skills/web-crawler-ocr/
 
 ### Verify API keys
 ```bash
-cat /home/rhim/claude-projects/tools/web-crawler-ocr/.env
+cat .claude/skills/web-crawler-ocr/scripts/.env
 ```
 
 ### Test script manually
 ```bash
-python3 /home/rhim/claude-projects/tools/web-crawler-ocr/web-crawler.py \
-    "https://example.com" \
-    /tmp/test-output.md
+cd .claude/skills/web-crawler-ocr/scripts
+python3 web-crawler.py "https://example.com" /tmp/test-output.md
 ```
 
-## Version
+## Version History
 
+- **v1.1.0** (2025-11-10): Unified skill structure
+  - Self-contained scripts in skill folder
+  - Follows Claude Code best practices
 - **v1.0.0** (2025-10-29): Initial release
 
 ## Related Files
 
-- **Skill Definition**: `~/.claude/skills/web-crawler-ocr/SKILL.md`
-- **Main Script**: `/home/rhim/claude-projects/tools/web-crawler-ocr/web-crawler.py`
-- **Config**: `/home/rhim/claude-projects/tools/web-crawler-ocr/.env`
+- **Skill Definition**: `.claude/skills/web-crawler-ocr/SKILL.md`
+- **Main Script**: `.claude/skills/web-crawler-ocr/scripts/web-crawler.py`
+- **OCR Module**: `.claude/skills/web-crawler-ocr/scripts/gemini-ocr.py`
+- **Config**: `.claude/skills/web-crawler-ocr/scripts/.env` (gitignored)
