@@ -53,16 +53,24 @@ Based on user context, choose appropriate path:
 
 ### Step 3: Execute Web Crawler Script
 
+**WSL Path:**
 ```bash
-cd /Users/rhim/Projects/tools/web-crawler-ocr && \
-source venv/bin/activate && \
+cd /home/rhim/claude-projects/imi-workspace/.claude/skills/web-crawler-ocr/scripts && \
+python3 web-crawler.py "<URL>" "<output-path>"
+```
+
+**Mac Path:**
+```bash
+cd /Users/rhim/Projects/imi-workspace/.claude/skills/web-crawler-ocr/scripts && \
 python3 web-crawler.py "<URL>" "<output-path>"
 ```
 
 **Important:**
-- Always use full absolute paths
+- Scripts are now located within the skill folder
+- Always use full absolute paths for output
 - Quote URLs to handle special characters
 - Ensure output directory exists (create with `mkdir -p` if needed)
+- Virtual environment setup: Run `bash setup.sh` in scripts folder first time
 
 ### Step 4: Read and Analyze Results
 
@@ -87,9 +95,8 @@ python3 web-crawler.py "<URL>" "<output-path>"
 # 1. Ensure directory exists
 mkdir -p /Users/rhim/Projects/pkm/50-resources/competitor-analysis
 
-# 2. Run crawler
-cd /Users/rhim/Projects/tools/web-crawler-ocr && \
-source venv/bin/activate && \
+# 2. Run crawler (Mac)
+cd /Users/rhim/Projects/imi-workspace/.claude/skills/web-crawler-ocr/scripts && \
 python3 web-crawler.py \
     "https://competitor-cafe.com" \
     /Users/rhim/Projects/pkm/50-resources/competitor-analysis/competitor-cafe-20251029.md
@@ -114,8 +121,7 @@ Key insights:
 ```bash
 mkdir -p /Users/rhim/Projects/pkm/10-projects/12-education/12.06-hfk-winter-ai
 
-cd /Users/rhim/Projects/tools/web-crawler-ocr && \
-source venv/bin/activate && \
+cd /Users/rhim/Projects/imi-workspace/.claude/skills/web-crawler-ocr/scripts && \
 python3 web-crawler.py \
     "https://hfk.me/ai-team" \
     /Users/rhim/Projects/pkm/10-projects/12-education/12.06-hfk-winter-ai/hfk-ai-team-reference.md
@@ -143,22 +149,39 @@ export FIRECRAWL_API_KEY="your_firecrawl_key_here"
 
 ### Alternative: .env File
 
-Create `/Users/rhim/Projects/tools/web-crawler-ocr/.env`:
+Create `.env` in the scripts folder:
+
+**WSL:**
+```bash
+cd /home/rhim/claude-projects/imi-workspace/.claude/skills/web-crawler-ocr/scripts
+cp .env.example .env
+# Edit .env with your actual API keys
 ```
-GEMINI_API_KEY=your_gemini_key_here
-FIRECRAWL_API_KEY=your_firecrawl_key_here
+
+**Mac:**
+```bash
+cd /Users/rhim/Projects/imi-workspace/.claude/skills/web-crawler-ocr/scripts
+cp .env.example .env
+# Edit .env with your actual API keys
+```
+
+### Initial Setup
+
+Run setup script once to install dependencies:
+
+```bash
+cd /home/rhim/claude-projects/imi-workspace/.claude/skills/web-crawler-ocr/scripts
+bash setup.sh
 ```
 
 ### Check Setup
 
 ```bash
-# Verify .env file
-cat /Users/rhim/Projects/tools/web-crawler-ocr/.env
+# Verify .env file exists
+cat .claude/skills/web-crawler-ocr/scripts/.env
 
 # Test script
-cd /Users/rhim/Projects/tools/web-crawler-ocr && \
-source venv/bin/activate && \
-python3 web-crawler.py
+cd .claude/skills/web-crawler-ocr/scripts && python3 web-crawler.py --help
 ```
 
 ## Limitations
@@ -185,24 +208,32 @@ export FIRECRAWL_API_KEY="your_key"
 ### Python Package Errors
 
 ```bash
-cd /Users/rhim/Projects/tools/web-crawler-ocr
-source venv/bin/activate
-pip install -r requirements.txt
+cd .claude/skills/web-crawler-ocr/scripts
+bash setup.sh
+```
+
+Or manually:
+```bash
+pip install -r .claude/skills/web-crawler-ocr/scripts/requirements.txt
 ```
 
 ### Script Not Found
 
 Verify script location:
 ```bash
-ls -la /Users/rhim/Projects/tools/web-crawler-ocr/web-crawler.py
+ls -la .claude/skills/web-crawler-ocr/scripts/web-crawler.py
 ```
 
 ## Script Location
 
-- **Main Script**: `/Users/rhim/Projects/tools/web-crawler-ocr/web-crawler.py`
-- **Config**: `/Users/rhim/Projects/tools/web-crawler-ocr/.env`
-- **Virtual Env**: `/Users/rhim/Projects/tools/web-crawler-ocr/venv/`
-- **Guide**: `/Users/rhim/Projects/tools/web-crawler-ocr/README.md`
+**All scripts are now contained within the skill folder:**
+
+- **Main Script**: `.claude/skills/web-crawler-ocr/scripts/web-crawler.py`
+- **OCR Script**: `.claude/skills/web-crawler-ocr/scripts/gemini-ocr.py`
+- **Config Example**: `.claude/skills/web-crawler-ocr/scripts/.env.example`
+- **Setup Script**: `.claude/skills/web-crawler-ocr/scripts/setup.sh`
+- **Dependencies**: `.claude/skills/web-crawler-ocr/scripts/requirements.txt`
+- **Documentation**: `.claude/skills/web-crawler-ocr/README.md`
 
 ## Inspired By
 
@@ -213,6 +244,11 @@ Noah Brier's Claudesidian project:
 
 ## Version History
 
+- **v1.1.0 (2025-11-10)**: Unified skill structure
+  - Moved all scripts into `.claude/skills/web-crawler-ocr/scripts/`
+  - Follows Claude Code Skills official best practices
+  - Self-contained skill folder (no external dependencies)
+  - Added setup.sh and .env.example
 - **v1.0.0 (2025-10-29)**: Initial skill creation
   - Firecrawl + Gemini OCR integration
   - Model-invoked automation
